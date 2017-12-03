@@ -23,11 +23,11 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLoad() {
         super.viewDidLoad()
         openCameraAndGetOutput()
-        setupIdentifierConfidenceLabel()
     }
     
     fileprivate func setupIdentifierConfidenceLabel() {
         view.addSubview(identifierLabel)
+        identifierLabel.numberOfLines = 0
         identifierLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -32).isActive = true
         identifierLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         identifierLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -48,23 +48,24 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let dataOutput = AVCaptureVideoDataOutput()
         dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "Queue"))
         captureSession.addOutput(dataOutput)
+        setupIdentifierConfidenceLabel()
     }
     
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-        // change `Resnet50()` here with other models if you want to use them
+        //change resnet50() with other models to try them
         guard let model = try? VNCoreMLModel(for: Resnet50().model) else { return }
-        
-        let request = VNCoreMLRequest(model: model) { (finalRequest, error) in
-            guard let results = finalRequest.results as? [VNClassificationObservation] else { return }
-            guard let firstResult = results.first else { return }
+        let request = VNCoreMLRequest(model: model) { (finishedReq, error) in
+            if let error = error { return }
+            guard let results = finishedReq.results as? [VNClassificationObservation] else { return }
+            guard let firstObservation = results.first else { return }
+            print(firstObservation.identifier, firstObservation.confidence)
             DispatchQueue.main.async {
-                self.identifierLabel.text = "\(firstResult.identifier) \(firstResult.confidence * 100)"
+                self.identifierLabel.text = "\(firstObservation.identifier) \(firstObservation.confidence * 100)"
             }
         }
-        
-        try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+        try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:]).perform([request])
     }
     
 
