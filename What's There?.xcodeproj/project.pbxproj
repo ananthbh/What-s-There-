@@ -14,6 +14,9 @@
 		4ED2D3821FD411CA0097639D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ED2D3801FD411CA0097639D /* LaunchScreen.storyboard */; };
 		4ED2D38D1FD411CA0097639D /* What_s_There_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2D38C1FD411CA0097639D /* What_s_There_Tests.swift */; };
 		4ED2D3981FD411CA0097639D /* What_s_There_UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2D3971FD411CA0097639D /* What_s_There_UITests.swift */; };
+		4ED2D3A61FD419410097639D /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2D3A51FD419410097639D /* SqueezeNet.mlmodel */; };
+		4ED2D3A81FD41ACE0097639D /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2D3A71FD41ACE0097639D /* Resnet50.mlmodel */; };
+		4ED2D3AA1FD41AD40097639D /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2D3A91FD41AD40097639D /* Inceptionv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +50,9 @@
 		4ED2D3931FD411CA0097639D /* What's There?UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "What's There?UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ED2D3971FD411CA0097639D /* What_s_There_UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = What_s_There_UITests.swift; sourceTree = "<group>"; };
 		4ED2D3991FD411CA0097639D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ED2D3A51FD419410097639D /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
+		4ED2D3A71FD41ACE0097639D /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
+		4ED2D3A91FD41AD40097639D /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 			children = (
 				4ED2D3771FD411CA0097639D /* AppDelegate.swift */,
 				4ED2D3791FD411CA0097639D /* ViewController.swift */,
+				4ED2D3AB1FD41ADC0097639D /* Models */,
 				4ED2D37B1FD411CA0097639D /* Main.storyboard */,
 				4ED2D37E1FD411CA0097639D /* Assets.xcassets */,
 				4ED2D3801FD411CA0097639D /* LaunchScreen.storyboard */,
@@ -123,6 +130,16 @@
 				4ED2D3991FD411CA0097639D /* Info.plist */,
 			);
 			path = "What's There?UITests";
+			sourceTree = "<group>";
+		};
+		4ED2D3AB1FD41ADC0097639D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4ED2D3A51FD419410097639D /* SqueezeNet.mlmodel */,
+				4ED2D3A91FD41AD40097639D /* Inceptionv3.mlmodel */,
+				4ED2D3A71FD41ACE0097639D /* Resnet50.mlmodel */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +276,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ED2D3AA1FD41AD40097639D /* Inceptionv3.mlmodel in Sources */,
 				4ED2D37A1FD411CA0097639D /* ViewController.swift in Sources */,
+				4ED2D3A61FD419410097639D /* SqueezeNet.mlmodel in Sources */,
+				4ED2D3A81FD41ACE0097639D /* Resnet50.mlmodel in Sources */,
 				4ED2D3781FD411CA0097639D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
