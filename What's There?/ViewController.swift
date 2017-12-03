@@ -9,11 +9,11 @@
 import UIKit
 import AVKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        openCamera()
+        openCameraAndGetOutput()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func openCamera() {
+    func openCameraAndGetOutput() {
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
         guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
@@ -31,7 +31,13 @@ class ViewController: UIViewController {
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = self.view.frame
         self.view.layer.addSublayer(previewLayer)
+        
+        let dataOutput = AVCaptureVideoDataOutput()
+        dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "Queue"))
+        captureSession.addOutput(dataOutput)
     }
+    
+    
 
 }
 
