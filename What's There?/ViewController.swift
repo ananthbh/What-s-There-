@@ -60,7 +60,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             guard let results = finalRequest.results as? [VNClassificationObservation] else { return }
             guard let firstResult = results.first else { return }
             DispatchQueue.main.async {
-                self.identifierLabel.text = "\(firstResult.identifier) \(firstObservation.confidence * 100)"
+                self.identifierLabel.text = "\(firstResult.identifier) \(firstResult.confidence * 100)"
             }
         }
         
