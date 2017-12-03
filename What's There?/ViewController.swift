@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import Vision
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
 
@@ -49,7 +50,22 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         captureSession.addOutput(dataOutput)
     }
     
-    
+    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
+        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        // change `Resnet50()` here with other models if you want to use them
+        guard let model = try? VNCoreMLModel(for: Resnet50().model) else { return }
+        
+        let request = VNCoreMLRequest(model: model) { (finalRequest, error) in
+            guard let results = finalRequest.results as? [VNClassificationObservation] else { return }
+            guard let firstResult = results.first else { return }
+            DispatchQueue.main.async {
+                self.identifierLabel.text = "\(firstResult.identifier) \(firstObservation.confidence * 100)"
+            }
+        }
+        
+        try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
+    }
     
 
 }
